@@ -22,6 +22,8 @@ A python script to discover google test code and run automatically
 
 > $ export GTEST_DIR='/Users/Hoge/gtest'
 
+ 
+
 ## 4. Run the GoogleTestDiscover.py
 
 The script search test files which name is *Test.cpp and run:
@@ -34,9 +36,9 @@ If you run the script without second arg,
 
 The script search from the current dir.
 
-If you runt the script with second arg,
+If you run the script with second arg,
 
-The script search from the pointed dir:
+The script search from the specified dir:
 
 > $ python GoogleTestDiscover.py ../../
 
