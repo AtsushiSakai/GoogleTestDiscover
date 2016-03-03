@@ -2,15 +2,19 @@
 # -*- coding: utf-8 -*-
 # author:Atsushi Sakai
 import os
+import sys
 import logging as log
 import subprocess 
 
+#You can set top dir of the test file search
+SearchPath="../../"
+
 def Print(string, color, highlight=False):
-    u"""
+    """
     Colored print
 
     colorlist:
-        red,green,yellow,blue,magenta,cyan,white,crimson
+        red,green
 
     """
     end="\033[1;m"
@@ -30,37 +34,11 @@ def Print(string, color, highlight=False):
             pstr+='\033[1;43m'
         else:
             pstr+='\033[1;33m'
-    elif color == "blue":
-        if highlight:
-            pstr+='\033[1;44m'
-        else:
-            pstr+='\033[1;34m'
-    elif color == "magenta":
-        if highlight:
-            pstr+='\033[1;45m'
-        else:
-            pstr+='\033[1;35m'
-    elif color == "cyan":
-        if highlight:
-            pstr+='\033[1;46m'
-        else:
-            pstr+='\033[1;36m'
-    elif color == "white":
-        if highlight:
-            pstr+='\033[1;47m'
-        else:
-            pstr+='\033[1;37m'
-    elif color == "crimson":
-        if highlight:
-            pstr+='\033[1;48m'
-        else:
-            pstr+='\033[1;38m'
+
     else:
-        print("Error Unsupported color:"+color)
+        print(("Error Unsupported color:"+color))
 
-    print(pstr+string+end)
-
-
+    print((pstr+string+end))
 
 class Gtest:
     def __init__(self):
@@ -76,43 +54,43 @@ class Gtest:
             self.ExeGTest(path)
 
     def ExeGTest(self,path):
-        u"""
+        """
             Execute gtest
 
-            sample:g++ test.cpp -I./gtest/include  -L./gtest/mybuild -lpthread -lgtest_main -lgtest && ./a.out 
+            sample:g++ -lpthread test.cpp -I./gtest/include  -L./gtest/mybuild -lgtest_main -lgtest && ./a.out 
         """
-        print self.gtestdir
-        cmd="g++ "
+        print(self.gtestdir)
+        cmd="g++ -lpthread "
         cmd+=path
         cmd+=" -I"
         cmd+=self.gtestdir+"/googletest/include -L"
         cmd+=self.gtestdir+"/googlemock/gtest "
-        cmd+="-lpthread -lgtest_main -lgtest && ./a.out"
-        print cmd
+        cmd+=" -lgtest_main -lgtest && ./a.out"
+        print(cmd)
         try:
             output = subprocess.check_output(cmd,shell=True)
             returncode = 0
-            print(output)
+            Print(output,"green")
         except subprocess.CalledProcessError as e:
             output = e.output
             returncode = e.returncode
             Print(output,"red")
 
     def SearchTestFiles(self):
-        u""" 
+        """ 
         Search test file
         """
         testPaths=[]
-        for file in self.fild_all_files('.'):
+        for file in self.fild_all_files(SearchPath):
             if "Test.cpp" in file:
                 testPaths.append(file)
 
         if len(testPaths)==0:
-            log.warning('Cannot find any test file.')
+            Print('Cannot find any test file.',"yellow")
             exit(0)
 
-        print(str(len(testPaths))+" test files are found")
-        print testPaths
+        print((str(len(testPaths))+" test files are found"))
+        print(testPaths)
         return testPaths
 
     def fild_all_files(self,directory):
@@ -123,7 +101,10 @@ class Gtest:
 
 
 if __name__ == '__main__':
-    print __file__+" start!!"
+    print(__file__+" start!!")
+    argvs = sys.argv 
+    if len(argvs)>=2:
+        SearchPath=argvs[1]
     Gtest()
 
 
