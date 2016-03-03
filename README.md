@@ -1,6 +1,8 @@
 # GoogleTestDiscover
 
-A python script to discover google test code and run automatically
+A python script to discover google test code and run automatically.
+
+It's like the unittest discover on python.
 
 # How to use
 
