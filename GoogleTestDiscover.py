@@ -7,7 +7,7 @@ import logging as log
 import subprocess 
 
 #You can set top dir of the test file search
-SearchPath="../../"
+SearchPath="."
 
 def Print(string, color, highlight=False):
     """
