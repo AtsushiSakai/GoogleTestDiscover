@@ -7,7 +7,7 @@ import logging as log
 import subprocess 
 
 #You can set top dir of the test file search
-SearchPath="."
+SearchPath="../../../"
 
 def Print(string, color, highlight=False):
     """
@@ -60,12 +60,12 @@ class Gtest:
             sample:g++ -lpthread test.cpp -I./gtest/include  -L./gtest/mybuild -lgtest_main -lgtest && ./a.out 
         """
         print(self.gtestdir)
-        cmd="g++ -lpthread "
+        cmd="g++ -pthread "
         cmd+=path
         cmd+=" -I"
         cmd+=self.gtestdir+"/googletest/include -L"
         cmd+=self.gtestdir+"/googlemock/gtest "
-        cmd+=" -lgtest_main -lgtest && ./a.out"
+        cmd+=" -lpthread -lgtest_main -lgtest && ./a.out"
         print(cmd)
         try:
             output = subprocess.check_output(cmd,shell=True)
