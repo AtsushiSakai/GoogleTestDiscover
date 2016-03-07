@@ -65,7 +65,7 @@ class Gtest:
         cmd+=" -I"
         cmd+=self.gtestdir+"/googletest/include -L"
         cmd+=self.gtestdir+"/googlemock/gtest "
-        cmd+=" -lpthread -lgtest_main -lgtest && ./a.out"
+        cmd+=" -lpthread -lgtest_main -lgtest -std=c++11 && ./a.out"
         print(cmd)
         try:
             output = subprocess.check_output(cmd,shell=True)
