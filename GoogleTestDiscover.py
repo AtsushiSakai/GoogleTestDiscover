@@ -39,13 +39,16 @@ def Print(string, color, highlight=False):
     else:
         print(("Error Unsupported color:" + color))
 
-    print((pstr + string.decode('utf-8') + end))
+    if isinstance(string, str):
+        print((pstr + string + end))
+    else:
+        print((pstr + string.decode('utf-8') + end))
 
 
 class Gtest:
 
     def __init__(self):
-           # Get gtest dir path
+        # Get gtest dir path
         self.gtestdir = os.environ.get("GTEST_DIR")
         if self.gtestdir is None:
             log.critical('Cannot find GTEST_DIR environment variable')
@@ -60,7 +63,8 @@ class Gtest:
         """
             Execute gtest
 
-            sample:g++ -lpthread test.cpp -I./gtest/include  -L./gtest/mybuild -lgtest_main -lgtest && ./a.out
+            sample:g++ -lpthread test.cpp -I./gtest/include
+                        -L./gtest/mybuild -lgtest_main -lgtest && ./a.out
         """
         print(self.gtestdir)
         cmd = "g++ -pthread "
@@ -72,11 +76,11 @@ class Gtest:
         print(cmd)
         try:
             output = subprocess.check_output(cmd, shell=True)
-            returncode = 0
+            #  returncode = 0
             Print(output, "green")
         except subprocess.CalledProcessError as e:
             output = e.output
-            returncode = e.returncode
+            #  returncode = e.returncode
             Print(output, "red")
 
     def SearchTestFiles(self):
