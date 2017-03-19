@@ -82,6 +82,7 @@ class Gtest:
             output = e.output
             #  returncode = e.returncode
             Print(output, "red")
+            sys.exit(1)
 
     def SearchTestFiles(self):
         """
@@ -108,8 +109,10 @@ class Gtest:
 
 
 if __name__ == '__main__':
-    print(__file__ + " start!!")
+    print(__file__ + " start!")
     argvs = sys.argv
     if len(argvs) >= 2:
         SearchPath = argvs[1]
     Gtest()
+    print("Test is OK!!!")
+    sys.exit(0)
