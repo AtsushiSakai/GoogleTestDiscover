@@ -45,6 +45,31 @@ The script search from the specified dir:
 > $ python GoogleTestDiscover.py ../../
 
 
+# How to add compile option 
+
+If you want to do a test which is based on other libraries, 
+   
+you can add some compile options with a config file.
+
+The config file is a python script,
+
+and it has to have a same name of the test cpp code.
+
+For example, if the test code name is "sampleTest.cpp",
+
+The config file needs to be "sampleTest.py".
+
+  
+
+config_sample.py is a sample of the config file.
+
+you can set options like:
+
+
+    opt_include = "src/include/ " #include dir
+    opt_lib = "src/ -lsample" #library dit
+
+
 
 # License
 
