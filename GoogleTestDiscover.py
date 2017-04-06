@@ -21,8 +21,7 @@ class Gtest:
 
     def __init__(self):
         # options for compiler
-        self.opt_include = ""
-        self.opt_lib = ""
+        self.options = []
 
         # Get gtest dir path
         self.gtestdir = os.environ.get("GTEST_DIR")
@@ -42,8 +41,7 @@ class Gtest:
         optpath = path[:-4] + ".py"
         try:
             m = importlib.import_module(os.path.basename(optpath)[:-3])
-            self.opt_include += m.opt_include
-            self.opt_lib += m.opt_lib
+            self.options += m.options
             print("found opt file:" + optpath)
         except ImportError:
             print("No opt file")
@@ -64,9 +62,11 @@ class Gtest:
         cmd = "g++ -pthread "
         cmd += path + " "
         cmd += "-I" + self.gtestdir + "/googletest/include "
-        cmd += "-I" + self.gtestdir + self.opt_include
         cmd += "-L" + self.gtestdir + "/googlemock/gtest "
-        cmd += "-L" + self.gtestdir + self.opt_lib
+        for option in self.options:
+            cmd += self.options
+        self.options = []
+
         cmd += " -lpthread -lgtest_main -lgtest -std=c++11 && ./a.out"
         print("compile command:\n" + cmd)
         try:

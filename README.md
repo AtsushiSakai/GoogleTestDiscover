@@ -65,9 +65,8 @@ config_sample.py is a sample of the config file.
 
 you can set options like:
 
-
-    opt_include = "src/include/ " #include dir
-    opt_lib = "src/ -lsample" #library dit
+    options.append("-I src/include/ ")
+    options.append("-L src/lib/ ")
 
 
 
