@@ -64,7 +64,7 @@ class Gtest:
         cmd += "-I" + self.gtestdir + "/googletest/include "
         cmd += "-L" + self.gtestdir + "/googlemock/gtest "
         for option in self.options:
-            cmd += self.options
+            cmd += option
         self.options = []
 
         cmd += " -lpthread -lgtest_main -lgtest -std=c++11 && ./a.out"
